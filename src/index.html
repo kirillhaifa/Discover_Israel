@@ -1,0 +1,191 @@
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="./styles/style.css" />
+    <link rel="stylesheet" href="./fonts/fonts.css" />
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="img/icon.ico" sizes="any" />
+    <link rel="icon" href="img/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="img/icon.png" />
+
+    <meta property="og:title" content="Places in Israel to visit" />
+
+    <!--подключение красивой карточки при отправки ссылки в соц сетях-->
+    <meta property="og:url" content="#0" />
+    <meta property="og:image" content="/img/icon.png" />
+    <meta property="twitter:card" content="summary_large_image" />
+    <!-- тоже самое для твиттера -->
+
+    <meta
+      name="description"
+      content="List of places in Israel recommended to visit"
+    />
+    <title>Discover Israel</title>
+  </head>
+  <body class="body">
+    <header class="header">
+      <a class="header__logo_container" href="">
+        <img src="./img/icon.png" class="header__logo" />
+        <div class="header__logo_text_container">
+          <h1 class="header__title">Discover Israel</h1>
+          <p class="header__description">
+            Places in Israel, which I visited and can recommend you to visit
+          </p>
+        </div>
+      </a>
+      <ul class="header__languages">
+        <li class="header__language_item">
+          <button
+            class="header__language_button header__language_button_english"
+          >
+            <p class="header__languages_text">English</p>
+          </button>
+        </li>
+        <li class="header__language_item">
+          <button
+            class="header__language_button header__language_button_hebrew"
+          >
+            <p class="header__languages_text hebrew" lang="Heb">עברית</p>
+          </button>
+        </li>
+        <li class="header__language_item">
+          <button
+            class="header__language_button header__language_button_russian"
+          >
+            <p class="header__languages_text" lang="Ru">Русский</p>
+          </button>
+        </li>
+      </ul>
+    </header>
+    <nav class="nav">
+      <ul class="nav__list">
+        <li class="nav__list_item">
+          <button class="nav__button">
+            <img class="nav__img" src="./img/grill_icon.svg" alt="" />
+            <p class="nav__text">Place for grill</p>
+          </button>
+        </li>
+        <li class="nav__list_item">
+          <button class="nav__button">
+            <img class="nav__img" src="./img/hiking_icon.png" alt="" />
+            <p class="nav__text">Hiking</p>
+          </button>
+        </li>
+        <li class="nav__list_item">
+          <button class="nav__button">
+            <img class="nav__img" src="./img/view_icon.png" alt="" />
+            <p class="nav__text">Spectacular view</p>
+          </button>
+        </li>
+        <li class="nav__list_item">
+          <button class="nav__button">
+            <img class="nav__img" src="./img/bus.png" alt="" />
+            <p class="nav__text">Public transport</p>
+          </button>
+        </li>
+        <li class="nav__list_item">
+          <button class="nav__button">
+            <img class="nav__img" src="./img/beach icon.png" alt="" />
+            <p class="nav__text">Beach relaxation</p>
+          </button>
+        </li>
+        <li class="nav__list_item">
+          <button class="nav__button">
+            <img class="nav__img" src="./img/history icon.svg" alt="" />
+            <p class="nav__text">Historical place</p>
+          </button>
+        </li>
+        <li class="nav__list_item">
+          <button class="nav__button">
+            <img class="nav__img dollar" src="./img/no money.svg" alt="" />
+            <p class="nav__text">Free</p>
+          </button>
+        </li>
+        <li class="nav__list_item">
+          <button class="nav__button">
+            <img class="nav__img" src="./img/dog icon.svg" alt="" />
+            <p class="nav__text">Avaliable with pets</p>
+          </button>
+        </li>
+      </ul>
+    </nav>
+    <div class="header__search">
+      <input
+        type="text"
+        placeholder="Find place"
+        class="header__search_input"
+      />
+    </div>
+    <main class="main">
+      <!--
+      <article class="about">
+        <h2 class="about__title">What is this project for?</h2>
+        <p class="about__text">
+          This project is a list of places in Israel, which I visited and can
+          recomend to visit
+        </p>
+      </article>
+    -->
+      <article class="places">
+        <ul class="places__list"></ul>
+      </article>
+    </main>
+    <footer class="footer">
+      <nav class="footer__nav">
+        <ul class="nav__list">
+          <li class="nav__list_item">
+            <a href="" class="nav__list_item_link">Main page</a>
+          </li>
+          <li class="nav__list_item">
+            <a href="" class="nav__list_item_link">About project</a>
+          </li>
+          <li class="nav__list_item">
+            <a href="" class="nav__list_item_link">Contacts</a>
+          </li>
+        </ul>
+      </nav>
+    </footer>
+
+    <template id="card__template">
+      <li class="places__list_item">
+        <span class="places__paper-clip"></span>
+        <ul class="places__polaroid_list">
+        </ul>
+        <h4 class="places__list_title"></h4>
+        <p class="places__list_text"></p>
+        <ul class="places__description_icons"></ul>
+      </li>
+    </template>
+
+    <template id="icon__template">
+      <li class="places__description_icon_item">
+        <img class="places__description_icon_img" src="" alt="" />
+      </li>
+    </template>
+
+    <template id="polaroid__template">
+      <li class="places__polaroid_photo">
+        <img class="places__list_image" src="" alt="" />
+        <h3 class="places__polaroid_title"></h3>
+      </li>
+    </template>
+
+    <dialog id="dialog" class="dialog">
+      <div class="modal__full_info">
+        <div class="places__polaroid_photo places__polaroid_photo_dialog">
+          <img
+            class="places__list_image places__list_image_dialog"
+            src=""
+            alt=""
+          />
+          <h3 class="places__polaroid_title places__polaroid_title_dialog"></h3>
+        </div>
+        <h4 class="places__list_title places__list_title_dialog"></h4>
+        <p class="places__list_text places__list_text_dialog"></p>
+        <ul class="places__description_icons"></ul>
+      </div>
+    </dialog>
+    <script type="module" src="./index.js"></script>
+  </body>
+</html>
