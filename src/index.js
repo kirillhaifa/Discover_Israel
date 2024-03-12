@@ -1,188 +1,165 @@
 import { placesBasis } from "./scripts/placeBasis.js";
-import { parametersIcons } from "./scripts/icons.js";
+import { shuffleArray } from "./scripts/utilits.js";
+import { addNewCard } from "./scripts/newCard.js";
 
-const cardTemplate = document.querySelector("#card__template").content;
-const iconTemplate = document.querySelector("#icon__template").content;
-const polaroidTemplate = document.querySelector("#polaroid__template").content;
+export const cardTemplate = document.querySelector("#card__template").content;
+export const iconTemplate = document.querySelector("#icon__template").content;
+export const mapTemplate = document.querySelector('#map__template').content;
+export const polaroidTemplate = document.querySelector(
+  "#polaroid__template"
+).content;
 const placesList = document.querySelector(".places__list");
-const languageButtonHebrew = document.querySelector(
-  ".header__language_button_hebrew"
-);
-const languageButtonEnglish = document.querySelector(
-  ".header__language_button_english"
-);
-const languageButtonRussain = document.querySelector(
-  ".header__language_button_russian"
-);
 const headerTittle = document.querySelector(".header__title");
 const headerDescription = document.querySelector(".header__description");
 const body = document.querySelector(".body");
 const main = document.querySelector(".main");
-const dialog = document.querySelector("#dialog");
+const headerLogoTextContainer = document.querySelector(
+  ".header__logo_text_container"
+);
+const parametersForm = document.querySelector('.parameters_form')
+const parametersCheckBoxes = document.querySelectorAll(
+  ".parameters_form_checkbox"
+);
+export const languagesForm = document.querySelector(".header__languages");
+let filteredPlacesBasis = [];
+const headerSearchContainer = document.querySelector('.header__search')
+const searchInput = document.querySelector(".header__search_input");
+const mapButton = document.querySelector('.button__map')
 
-const renderIconList = (item, cardIconList) => {
-  Object.keys(item.parameters).forEach((parameter) => {
-    const renderIcon = (parameter) => {
-      const icon = iconTemplate
-        .querySelector(".places__description_icon_item")
-        .cloneNode(true);
-      const iconImage = icon.querySelector(".places__description_icon_img");
-
-      if (item.parameters[parameter]) {
-        const parameterIcon = parametersIcons[parameter];
-        if (parameterIcon) {
-          iconImage.src = parameterIcon;
-          return icon;
-        } else {
-          return null;
-        }
-      } else {
-        return null;
-      }
-    };
-
-    const icon = renderIcon(parameter);
-    if (icon !== null) {
-      cardIconList.append(icon);
-    }
-  });
-};
-
-const addNewCard = (item, language) => {
-  const cardElement = cardTemplate
-    .querySelector(".places__list_item")
-    .cloneNode(true);
-  const cardPlaceTitle = cardElement.querySelector(".places__list_title");
-  const cardPlaceDescription = cardElement.querySelector(".places__list_text");
-  const cardIconList = cardElement.querySelector(".places__description_icons");
-  const placesPaperClip = cardElement.querySelector(".places__paper-clip");
-
-
-  renderIconList(item, cardIconList);
-
-  for (let i = 0; i < 3; i++) {
-    const polaroidElemnt = polaroidTemplate.cloneNode(true);
-    const placesPolaroidList = cardElement.querySelector(
-      ".places__polaroid_list"
-    );
-    const cardImage = polaroidElemnt.querySelector(".places__list_image");
-    const cardImageTitle = polaroidElemnt.querySelector(
-      ".places__polaroid_title"
-    );
-    const cardPolaroidBlock = polaroidElemnt.querySelector(
-      ".places__polaroid_photo"
-    );
-    if (item.photos[i]) {
-      cardImage.src = item.photos[i].photoWay;
-      cardImageTitle.textContent = item.photos[i].photoName;
-      placesPolaroidList.append(polaroidElemnt);
-  
-      cardPolaroidBlock.style.setProperty(
-        "transform",
-        `rotate(${getRandomNumberNotZero(-5, 5)}deg`
-      );
-    }
-    
-  }
-
-  cardPlaceTitle.textContent = item['placeName' + language];
-  cardPlaceDescription.textContent = item['shortDescription' + language];
-
-  placesPaperClip.style.setProperty(
-    "transform",
-    `rotate(${getRandomNumberNotZero(-4, 4)}deg`
-  );
-
-  placesPaperClip.style.setProperty(
-    "left",
-    `${getRandomNumberNotZero(80, 110)}px`
-  );
-
-  cardElement.addEventListener("click", () => {
-    const dialog = document.querySelector(".dialog");
-    const modalCardImage = document.querySelector(".places__list_image_dialog");
-    const modalCardImageTitle = document.querySelector(
-      ".places__polaroid_title_dialog"
-    );
-    const modalCardPlaceTitle = document.querySelector(
-      ".places__list_title_dialog"
-    );
-    const modalCardPlaceDescription = document.querySelector(
-      ".places__list_text_dialog"
-    );
-
-    modalCardImage.src = item.photos[0].photoWay;
-    modalCardImageTitle.textContent = item.photos[0].photoName;
-    modalCardPlaceTitle.textContent = item.placeName;
-    modalCardPlaceDescription.textContent = item.shortDescription;
-
-    dialog.showModal();
-  });
-
-  return cardElement;
-};
-
-placesBasis.forEach((placeObjeсt) => {
-  placesList.append(addNewCard(placeObjeсt, 'English'));
-  body.classList.add("english");
+//rendering cards on first loading
+shuffleArray(placesBasis).forEach((placeObjeсt) => {
+  let language = languagesForm.elements["language"].value;
+  placesList.append(addNewCard(placeObjeсt, `${language}`));
+  body.classList.add(`${language.toLowerCase()}`);
 });
 
-languageButtonHebrew.addEventListener("click", () => {
-  placesList.innerHTML = "";
-  main.style.direction = "rtl";
+//filter for basis according parameters
+const filterBasisAccordingParameters = () => {
+  filteredPlacesBasis = placesBasis;
 
-  headerTittle.textContent = "תגלה את ישראל";
-  headerDescription.textContent =
-    "מקומות בישראל, בהם ביקרתי ויכול להמליץ לכם לבקר";
+  for (let i = 0; i < parametersCheckBoxes.length; i++) {
+    if (parametersCheckBoxes[i] && parametersCheckBoxes[i].checked) {
+      filteredPlacesBasis = filteredPlacesBasis.filter(
+        (place) => Object.values(place.parameters)[i] === true
+      );
+    }
+  }
 
-  placesBasis.forEach((placeObjeсt) => {
-    placesList.append(addNewCard(placeObjeсt, 'Hebrew'));
+  return filteredPlacesBasis;
+};
+
+//rendering cards on checkbox chenges
+parametersCheckBoxes.forEach((checkbox) => {
+  checkbox.addEventListener("change", function () {
+    let language = languagesForm.elements["language"].value;
+    placesList.innerHTML = "";
+    filterBasisAccordingParameters();
+    filterBasisAccordingSearch()
+    shuffleArray(filteredPlacesBasis).forEach((placeObjeсt) => {
+      placesList.append(addNewCard(placeObjeсt, `${language}`));
+    });
+    if (filteredPlacesBasis.length === 0) {
+      placesList.innerHTML = "<p>ничего не найдено</p>";
+    }
+  });
+});
+
+const switchFontAndDirection = (language) => {
+  if (language === "Hebrew") {
+    main.style.direction = "rtl";
+    headerTittle.textContent = "תגלה את ישראל";
+    headerDescription.textContent =
+      "מקומות בישראל, בהם ביקרתי ויכול להמליץ לכם לבקר";
     if (body.classList.contains("english")) {
       body.classList.remove("english");
     }
-    body.classList.add("hebrew");
-  });
-});
-
-languageButtonEnglish.addEventListener("click", () => {
-  placesList.innerHTML = "";
-  main.style.direction = "ltr";
-
-  headerTittle.textContent = "Discover Israel";
-  headerDescription.textContent =
-    "Places in Israel, which I visited and can recommend you to visit";
-
-  placesBasis.forEach((placeObjeсt) => {
-    placesList.append(addNewCard(placeObjeсt, 'English'));
-    if (body.classList.contains("hebrew")) {
-      body.classList.remove("hebrew");
+    if (!body.classList.contains("hebrew")) {
+      body.classList.add("hebrew");
     }
-    body.classList.add("english");
-  });
-});
-
-languageButtonRussain.addEventListener("click", () => {
-  placesList.innerHTML = "";
-  main.style.direction = "ltr";
-
-  headerTittle.textContent = "Открой для себя Израиль";
-  headerDescription.textContent =
-    "Места в Израиля, которые мы посетили и можем рекомендовать";
-
-  placesBasis.forEach((placeObjeсt) => {
-    placesList.append(addNewCard(placeObjeсt, 'Russian'));
-    if (body.classList.contains("hebrew")) {
+  } else if (language === "English") {
+    main.style.direction = "ltr";
+    headerTittle.textContent = "Discover Israel";
+    headerDescription.textContent =
+      "Places in Israel, which I visited and can recommend you to visit";
+    if (
+      body.classList.contains("hebrew") &&
+      !body.classList.contains("english")
+    ) {
       body.classList.remove("hebrew");
+      body.classList.add("english");
     }
-    body.classList.add("english");
-  });
-});
+  } else if (language === "Russian") {
+    main.style.direction = "ltr";
 
-//random number but not zero
-function getRandomNumberNotZero(min, max) {
-  let number = 0;
-  while (number === 0) {
-    number = Math.floor(Math.random() * (max - min + 1)) + min;
+    headerTittle.textContent = "Открой для себя Израиль";
+    headerDescription.textContent =
+      "Места в Израиля, которые мы посетили и можем рекомендовать";
+    if (
+      body.classList.contains("hebrew") &&
+      !body.classList.contains("english")
+    ) {
+      body.classList.remove("hebrew");
+      body.classList.add("english");
+    }
   }
-  return number;
-}
+};
+
+const filterBasisAccordingSearch = () => {
+  let regex = new RegExp(".*" + searchInput.value + ".*", "i");
+
+  if (searchInput.value.length >= 3) {
+    placesList.innerHTML = "";
+    filteredPlacesBasis = filteredPlacesBasis.filter((place) => {
+      return (
+        regex.test(place.placeNameEnglish) ||
+        regex.test(place.placeNameHebrew) ||
+        regex.test(place.placeNameRussian)
+      );
+    });
+
+    return filteredPlacesBasis;
+  }
+};
+
+//search
+searchInput.addEventListener("input", function () {
+  placesList.innerHTML = "";
+  filterBasisAccordingParameters();
+  filterBasisAccordingSearch();
+  let language = languagesForm.elements["language"].value;
+
+  filteredPlacesBasis.forEach((placeObjeсt) => {
+    placesList.append(addNewCard(placeObjeсt, `${language}`));
+    switchFontAndDirection(language)
+  });
+});
+
+//switching languages
+languagesForm.addEventListener("change", () => {
+  placesList.innerHTML = "";
+  let language = languagesForm.elements["language"].value;
+  filterBasisAccordingParameters();
+  filterBasisAccordingSearch()
+  filteredPlacesBasis.forEach((placeObjeсt) => {
+    placesList.append(addNewCard(placeObjeсt, `${language}`));
+    body.classList.add("english");
+  });
+  if (filteredPlacesBasis.length === 0) {
+    placesList.innerHTML = "<p>ничего не найдено</p>";
+  }
+  switchFontAndDirection(language);
+});
+
+//map 
+mapButton.addEventListener('click', function() {
+  parametersForm.innerHTML = ""
+  headerSearchContainer.innerHTML = ""
+  const map = mapTemplate.cloneNode(true);
+  placesList.innerHTML = "";
+  main.append(map)
+})
+
+
+const reversebaleElements = {
+  headerLogoTextContainer,
+};
