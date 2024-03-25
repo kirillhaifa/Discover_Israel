@@ -33,7 +33,6 @@ export const renderIconList = (item, cardIconList) => {
 
 //making a new card
 export const addNewCard = (item, language) => {
-  
   const cardElement = cardTemplate
     .querySelector(".places__list_item")
     .cloneNode(true);
@@ -43,8 +42,6 @@ export const addNewCard = (item, language) => {
   const placesPaperClip = cardElement.querySelector(".places__paper-clip");
 
   renderIconList(item, cardIconList);
-
-
 
   //making maximum 3 picturies for card
   for (let i = 0; i < 3; i++) {
@@ -109,3 +106,4 @@ export const addNewCard = (item, language) => {
 
   return cardElement;
 };
+

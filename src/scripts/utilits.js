@@ -18,3 +18,13 @@ export function shuffleArray(array) {
   return array;
 }
 
+
+//check if element in veiwport
+export function isElementInViewport(element) {
+  let rect = element.getBoundingClientRect();
+  return (
+    rect.bottom >= 0 &&
+    rect.top <= (window.innerHeight || document.documentElement.clientHeight)
+  );
+}
+
