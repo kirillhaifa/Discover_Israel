@@ -178,6 +178,13 @@ ol {
   flex-direction: row;
   align-items: center;
   gap: 5px;
+  transition: transform 0.3s ease;
+}
+
+.header__language_button:hover {
+  color: rgb(0, 0, 100);
+  transform: scale(1.01);
+  font-weight: 700;
 }
 
 .header__language_button_english {
@@ -220,6 +227,10 @@ ol {
 .nav__list_item:hover {
   color: rgb(0, 0, 100);
   transform: scale(1.01);
+  font-weight: 600;
+}
+
+.nav__list_item_map:hover {
   font-weight: 600;
 }
 
@@ -279,6 +290,21 @@ ol {
   margin-top: 3px;
   text-align: center;
 }
+
+.parameters__button {
+  transition: transform 0.3s ease;
+}
+
+.parameters__button {
+  transition: transform 0.3s ease;
+}
+
+.parameters__button:hover .parameters__button_text {
+  color: rgb(0, 0, 100);
+  transform: scale(1.01);
+  font-weight: 600;
+}
+
 
 .header__search {
   position: relative;

@@ -358,9 +358,9 @@ export const placesBasis = [
     },
   },
   {
-    placeNameEnglish: "Megiddo Forest",
-    placeNameHebrew: "יער מגידו",
-    placeNameRussian: "Лес Мегиддо",
+    placeNameEnglish: "Ein Hashofet Forest",
+    placeNameHebrew: "עין השופט יער",
+    placeNameRussian: "Лес Эйн А-Шофет ",
     shortDescriptionEnglish:
       "A vast forest with diverse flora and fauna, offering tranquil hiking trails and a rich historical significance.",
     shortDescriptionHebrew:
@@ -377,7 +377,7 @@ export const placesBasis = [
         photoName: "Forest path",
         photoWay:
           "https://static.israel21c.org/www/uploads/2023/04/Megido1_COVER.jpg",
-      }
+      },
     ],
     parameters: {
       grill: true,
@@ -393,7 +393,7 @@ export const placesBasis = [
   {
     placeNameEnglish: "Mount Barkan Lookout",
     placeNameHebrew: "תצפית הר ברקן",
-    placeNameRussian: "Смотровая гора Баркан",
+    placeNameRussian: "Смотровая точка на горе Баркан",
     shortDescriptionEnglish:
       "A scenic lookout point atop Mount Barkan offering panoramic views of the surrounding landscapes and valleys.",
     shortDescriptionHebrew:
@@ -449,7 +449,7 @@ export const placesBasis = [
       grill: true,
       hiking: false,
       view: true,
-      transport: true,
+      transport: false,
       beach: true,
       historical: false,
       free: true,
@@ -595,11 +595,11 @@ export const placesBasis = [
     placeNameHebrew: "האקליפטוס העתיק הזה",
     placeNameRussian: "Древнее сикаморовое дерево",
     shortDescriptionEnglish:
-      "This ancient sycamore tree is steeped in history and offers visitors a glimpse into the past, providing shade and tranquility amidst its grandeur.",
+      "This ancient sycamore tree, estimated to be between 600 and 1200 years old, is steeped in history. Under its sprawling branches, visitors can rest, imagining Napoleon himself finding shade and tranquility during the Egyptian campaign.",
     shortDescriptionHebrew:
-      "האקליפטוס העתיק הזה משוקף בהיסטוריה ומציע למבקרים הצצה לעבר, מספק צל ושלווה בתוך גאונותו.",
+      "האקליפטוס העתיק הזה, משוער כיום להיות בטווח של 600 עד 1200 שנה, משוקף בהיסטוריה. מתחת לענפיו המתפשטים, המבקרים יכולים לנוח, דומים לנפוליאון בעצמו שמוצא צל ושלווה במהלך מערכת מצרים.",
     shortDescriptionRussian:
-      "Это древнее сикаморовое дерево пропитано историей и предлагает посетителям взглянуть на прошлое, обеспечивая тень и спокойствие среди своего величия.",
+      "Это древнее сикаморовое дерево, оцениваемое в возрасте от 600 до 1200 лет, пропитано историей. Под его раскидистыми ветвями посетители могут насладиться отдыхом, вспоминая, как сам Наполеон находил тень и спокойствие во время Египетской кампании.",
     photos: [
       {
         photoName: "Ancient Sycamore Tree",
@@ -649,7 +649,7 @@ export const placesBasis = [
       grill: false,
       hiking: false,
       view: true,
-      transport: true,
+      transport: false,
       beach: false,
       historical: false,
       free: true,
@@ -789,11 +789,11 @@ export const placesBasis = [
     },
   },
   {
-    placeNameEnglish: "Bahá'í Gardens",
+    placeNameEnglish: "Baha'i Gardens",
     placeNameHebrew: "גני הבהא'י",
     placeNameRussian: "Сады Бахаи",
     shortDescriptionEnglish:
-      "The Bahá'í Gardens, a UNESCO World Heritage Site, showcase meticulously landscaped terraces, vibrant flowers, and stunning panoramic views of the city and sea.",
+      "The Baha'i Gardens, a UNESCO World Heritage Site, showcase meticulously landscaped terraces, vibrant flowers, and stunning panoramic views of the city and sea.",
     shortDescriptionHebrew:
       "גני הבהא'י, אתר תורשת עולמית של יונסקו, מציגים טרסות מעוצבות בקפידה, פרחים חיים ונופים פנורמיים מרהיבים של העיר והים.",
     shortDescriptionRussian:
@@ -847,7 +847,7 @@ export const placesBasis = [
       hiking: false,
       view: false,
       transport: false,
-      beach: false,
+      beach: true,
       historical: true,
       free: false,
       pets: false,
@@ -1015,6 +1015,70 @@ export const placesBasis = [
       pets: true,
     },
   },
+  {
+    placeNameEnglish: "Ein Afek",
+    placeNameHebrew: "עין אפק",
+    placeNameRussian: "Эйн Афек",
+    shortDescriptionEnglish:
+      "A beautiful nature reserve with lush vegetation, tranquil water features, and scenic walking trails",
+    shortDescriptionHebrew:
+      "שמורת טבע יפהפיה עם צמחייה רבה, מים שלווים ושבילי הליכה נוף",
+    shortDescriptionRussian:
+      "Красивый заповедник с буйной растительностью, тихими водными объектами и живописными тропинками для прогулок",
+    photos: [
+      {
+        photoName: "Fish",
+        photoWay:
+          "https://img-fotki.yandex.ru/get/897385/197772825.89/0_156d2f_da61ee58_XL.jpg",
+      },
+      {
+        photoName: "Scenic Trail",
+        photoWay:
+          "https://www.tiuli.com/image/e60ecbab6ae8394965ff60e4ed567afc.jpg?&width=1080&height=0",
+      },
+    ],
+    parameters: {
+      grill: false,
+      hiking: false,
+      view: true,
+      transport: true,
+      beach: false,
+      historical: false,
+      free: false,
+      pets: false,
+    },
+  },
+  {
+    placeNameEnglish: "Parod Falls",
+    placeNameHebrew: "מפלי פרוד",
+    placeNameRussian: "Водопады Парод",
+    shortDescriptionEnglish:
+      "Parod Falls is a perfect spot for hiking and picnicking near a mountain river with numerous cascades and small waterfalls. In the summer, the river dries up, making autumn or spring the best time to visit.",
+    shortDescriptionHebrew:
+      "מפלי פרוד הם מקום מושלם לטיולי הליכה ולפיקניק ליד נהר ההרים עם מספר קסקדות ומפלים קטנים. בקיץ, הנהר מתייבש, ולכן הזמן הטוב ביותר לביקור הוא בסתיו או באביב.",
+    shortDescriptionRussian:
+      "Водопады Парод - отличное место для хайкинга и пикника вблизи горной реки со множеством уступов и небольших водопадов. Летом река пересыхает, лучшее время для посещения осень или весна.",
+    photos: [
+      {
+        photoName: "Falls overview",
+        photoWay: "https://i.ibb.co/bgs133x/IMG-20240322-211844-612.webp",
+      },
+      {
+        photoName: "River view",
+        photoWay: "https://i.ibb.co/c3Zz7kR/IMG-20240322-211844-654.webp",
+      },
+    ],
+    parameters: {
+      grill: true,
+      hiking: true,
+      view: true,
+      transport: false,
+      beach: false,
+      historical: false,
+      free: true,
+      pets: true,
+    },
+  },
 ];
 
-console.log(placesBasis.length)
+console.log(`количество мест - ${placesBasis.length}`);

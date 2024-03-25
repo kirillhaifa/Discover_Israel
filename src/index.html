@@ -83,19 +83,19 @@
       <nav class="header__nav">
         <ul class="nav__list">
           <li class="nav__list_item">
-            <a href="" class="nav__list_item_link">Main page</a>
+            <a href="" class="nav__list_item_link nav__list_item_main">Main page</a>
           </li>
           <li class="nav__list_item">
-            <button class="nav__list_item_link button__map button">Map</button>
+            <button class="nav__list_item_link button__map button nav__list_item_map">Map</button>
           </li>
           <li class="nav__list_item">
-            <a href="./KeshetCave/keshetCave.html" class="nav__list_item_link">Unsafe for Israelis</a>
+            <a href="" class="nav__list_item_link nav__list_item_about">About project</a>
           </li>
           <li class="nav__list_item">
-            <a href="" class="nav__list_item_link">About project</a>
+            <a href="" class="nav__list_item_link nav__list_item_contacte">Contacts</a>
           </li>
           <li class="nav__list_item">
-            <a href="" class="nav__list_item_link">Contacts</a>
+            <button class="nav__list_item_link button nav__list_item_unsafe">Unsafe</button>
           </li>
         </ul>
       </nav>
@@ -115,7 +115,7 @@
           src="./img/grill_icon.svg"
           alt=""
         />
-        <p class="parameters__button_text">Place for grill</p></label
+        <p class="parameters__button_text parameters__button_text_grill">Place for grill</p></label
       >
       <input
         type="checkbox"
@@ -130,7 +130,7 @@
           src="./img/hiking_icon.png"
           alt=""
         />
-        <p class="parameters__button_text">Hiking</p></label
+        <p class="parameters__button_text parameters__button_text_hiking">Hiking</p></label
       >
       <input
         type="checkbox"
@@ -141,7 +141,7 @@
       />
       <label for="view" class="parameters__button">
         <img class="parameters__button_img" src="./img/view_icon.png" alt="" />
-        <p class="parameters__button_text">Spectacular view</p></label
+        <p class="parameters__button_text parameters__button_text_view">Spectacular view</p></label
       >
       <input
         type="checkbox"
@@ -152,7 +152,7 @@
       />
       <label for="transport" class="parameters__button">
         <img class="parameters__button_img" src="./img/bus.png" alt="" />
-        <p class="parameters__button_text">Public transport</p>
+        <p class="parameters__button_text parameters__button_text_transport">Public transport</p>
       </label>
       <input
         type="checkbox"
@@ -163,7 +163,7 @@
       />
       <label for="Beach" class="parameters__button">
         <img class="parameters__button_img" src="./img/beach icon.png" alt="" />
-        <p class="parameters__button_text">Beach relaxation</p>
+        <p class="parameters__button_text parameters__button_text_beach">Beach relaxation</p>
       </label>
       <input
         type="checkbox"
@@ -178,7 +178,7 @@
           src="./img/history icon.svg"
           alt=""
         />
-        <p class="parameters__button_text">Historical place</p>
+        <p class="parameters__button_text parameters__button_text_historical">Historical place</p>
       </label>
       <input
         type="checkbox"
@@ -193,7 +193,7 @@
           src="./img/no money.svg"
           alt=""
         />
-        <p class="parameters__button_text">Free</p>
+        <p class="parameters__button_text parameters__button_text_free">Free</p>
       </label>
       <input
         type="checkbox"
@@ -204,7 +204,7 @@
       />
       <label for="pets" class="parameters__button">
         <img class="parameters__button_img" src="./img/dog icon.svg" alt="" />
-        <p class="parameters__button_text">Avaliable with pets</p>
+        <p class="parameters__button_text parameters__button_text_pets">Available with pets</p>
       </label>
     </form>
     <div class="header__search">
@@ -219,6 +219,7 @@
         <ul class="places__list animated"></ul>
       </article>
     </main>
+    <fotter class="footer">
       <nav class="footer__nav">
         <ul class="nav__list">
           <li class="nav__list_item">
@@ -232,16 +233,18 @@
           </li>
         </ul>
       </nav>
-    </footer>
+    </fotter>
 
     <template id="card__template">
-      <li class="places__list_item">
-        <span class="places__paper-clip"></span>
-        <ul class="places__polaroid_list"></ul>
-        <h4 class="places__list_title"></h4>
-        <p class="places__list_text"></p>
-        <ul class="places__description_icons"></ul>
-      </li>
+      <div class="animated_card">
+        <li class="places__list_item">
+          <span class="places__paper-clip"></span>
+          <ul class="places__polaroid_list"></ul>
+          <h4 class="places__list_title"></h4>
+          <p class="places__list_text"></p>
+          <ul class="places__description_icons"></ul>
+        </li>
+      </div>
     </template>
 
     <template id="icon__template">
@@ -257,8 +260,8 @@
       </li>
     </template>
 
-    <template id="map__template" class="map">
-      <iframe src="https://www.google.com/maps/d/u/0/embed?mid=1upKmWv0I1zL3VW_2gLoDDANfYLZqhRY&ehbc=2E312F" width="100%" height="480"></iframe>    
+    <template id="map__template" >
+      <iframe class="map" src="https://www.google.com/maps/d/u/0/embed?mid=1upKmWv0I1zL3VW_2gLoDDANfYLZqhRY&ehbc=2E312F" width="100%" height="650vh"></iframe>    
     </template>
 
     <dialog id="dialog" class="dialog">

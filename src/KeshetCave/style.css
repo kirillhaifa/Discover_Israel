@@ -99,6 +99,7 @@ ol {
 
 
 
+
 /*header*/
 
 .header {
@@ -289,7 +290,7 @@ ol {
   padding-right: 40px; 
   background-image: url('../img/Search_Icon.svg'); 
   background-repeat: no-repeat;
-  background-position: right 10px top 50%;
+  background-position: inline-start 10px start 50%;
   background-size: 24px;
   height: 40px;
   width: 400px;
@@ -334,6 +335,18 @@ ol {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   justify-content: space-between;
 }
+
+.animated_card {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.animated_card.animated {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 
 .places__list_item:hover {
   transform: scale(1.03);

@@ -1,37 +1,48 @@
 import { placesBasis } from "./scripts/placeBasis.js";
-import { shuffleArray } from "./scripts/utilits.js";
+import { shuffleArray, isElementInViewport } from "./scripts/utilits.js";
 import { addNewCard } from "./scripts/newCard.js";
+import { traslatableElements } from "./scripts/translation.js";
+import { unsafePlacesBasis } from "./scripts/unsafe.js";
 
 export const cardTemplate = document.querySelector("#card__template").content;
 export const iconTemplate = document.querySelector("#icon__template").content;
-export const mapTemplate = document.querySelector('#map__template').content;
+export const mapTemplate = document.querySelector("#map__template").content;
+export const languagesForm = document.querySelector(".header__languages");
 export const polaroidTemplate = document.querySelector(
   "#polaroid__template"
 ).content;
 const placesList = document.querySelector(".places__list");
-const headerTittle = document.querySelector(".header__title");
-const headerDescription = document.querySelector(".header__description");
 const body = document.querySelector(".body");
 const main = document.querySelector(".main");
-const headerLogoTextContainer = document.querySelector(
-  ".header__logo_text_container"
-);
-const parametersForm = document.querySelector('.parameters_form')
+const parametersForm = document.querySelector(".parameters_form");
 const parametersCheckBoxes = document.querySelectorAll(
   ".parameters_form_checkbox"
 );
-export const languagesForm = document.querySelector(".header__languages");
-let filteredPlacesBasis = [];
-const headerSearchContainer = document.querySelector('.header__search')
+const headerSearchContainer = document.querySelector(".header__search");
 const searchInput = document.querySelector(".header__search_input");
-const mapButton = document.querySelector('.button__map')
+const mapButton = document.querySelector(".button__map");
+const footer = document.querySelector(".footer");
+const unsafeButton = document.querySelector(".nav__list_item_unsafe");
 
-//rendering cards on first loading
-shuffleArray(placesBasis).forEach((placeObjeсt) => {
-  let language = languagesForm.elements["language"].value;
+let filteredPlacesBasis = shuffleArray(placesBasis);
+let language = languagesForm.elements["language"].value;
+
+//render pn first loading
+body.classList.add(`${language.toLowerCase()}`);
+filteredPlacesBasis.forEach((placeObjeсt) => {
   placesList.append(addNewCard(placeObjeсt, `${language}`));
-  body.classList.add(`${language.toLowerCase()}`);
 });
+
+function renderCards() {
+  placesList.innerHTML = "";
+  filterBasisAccordingParameters();
+  filterBasisAccordingSearch();
+  let language = languagesForm.elements["language"].value;
+
+  filteredPlacesBasis.forEach((placeObjeсt) => {
+    placesList.append(addNewCard(placeObjeсt, `${language}`));
+  });
+}
 
 //filter for basis according parameters
 const filterBasisAccordingParameters = () => {
@@ -51,69 +62,25 @@ const filterBasisAccordingParameters = () => {
 //rendering cards on checkbox chenges
 parametersCheckBoxes.forEach((checkbox) => {
   checkbox.addEventListener("change", function () {
-    let language = languagesForm.elements["language"].value;
-    placesList.innerHTML = "";
-    filterBasisAccordingParameters();
-    filterBasisAccordingSearch()
-    shuffleArray(filteredPlacesBasis).forEach((placeObjeсt) => {
-      placesList.append(addNewCard(placeObjeсt, `${language}`));
-    });
+    renderCards();
     if (filteredPlacesBasis.length === 0) {
       placesList.innerHTML = "<p>ничего не найдено</p>";
     }
   });
 });
 
-const switchFontAndDirection = (language) => {
-  if (language === "Hebrew") {
-    main.style.direction = "rtl";
-    headerTittle.textContent = "תגלה את ישראל";
-    headerDescription.textContent =
-      "מקומות בישראל, בהם ביקרתי ויכול להמליץ לכם לבקר";
-    if (body.classList.contains("english")) {
-      body.classList.remove("english");
-    }
-    if (!body.classList.contains("hebrew")) {
-      body.classList.add("hebrew");
-    }
-  } else if (language === "English") {
-    main.style.direction = "ltr";
-    headerTittle.textContent = "Discover Israel";
-    headerDescription.textContent =
-      "Places in Israel, which I visited and can recommend you to visit";
-    if (
-      body.classList.contains("hebrew") &&
-      !body.classList.contains("english")
-    ) {
-      body.classList.remove("hebrew");
-      body.classList.add("english");
-    }
-  } else if (language === "Russian") {
-    main.style.direction = "ltr";
-
-    headerTittle.textContent = "Открой для себя Израиль";
-    headerDescription.textContent =
-      "Места в Израиля, которые мы посетили и можем рекомендовать";
-    if (
-      body.classList.contains("hebrew") &&
-      !body.classList.contains("english")
-    ) {
-      body.classList.remove("hebrew");
-      body.classList.add("english");
-    }
-  }
-};
-
 const filterBasisAccordingSearch = () => {
   let regex = new RegExp(".*" + searchInput.value + ".*", "i");
 
   if (searchInput.value.length >= 3) {
-    placesList.innerHTML = "";
     filteredPlacesBasis = filteredPlacesBasis.filter((place) => {
       return (
         regex.test(place.placeNameEnglish) ||
         regex.test(place.placeNameHebrew) ||
-        regex.test(place.placeNameRussian)
+        regex.test(place.placeNameRussian) ||
+        regex.test(place.shortDescriptionEnglish) ||
+        regex.test(place.shortDescriptionHebrew) ||
+        regex.test(place.shortDescriptionRussian)
       );
     });
 
@@ -123,43 +90,66 @@ const filterBasisAccordingSearch = () => {
 
 //search
 searchInput.addEventListener("input", function () {
-  placesList.innerHTML = "";
-  filterBasisAccordingParameters();
-  filterBasisAccordingSearch();
-  let language = languagesForm.elements["language"].value;
-
-  filteredPlacesBasis.forEach((placeObjeсt) => {
-    placesList.append(addNewCard(placeObjeсt, `${language}`));
-    switchFontAndDirection(language)
-  });
+  renderCards();
 });
 
 //switching languages
 languagesForm.addEventListener("change", () => {
-  placesList.innerHTML = "";
+  renderCards();
+
+  //translate all translatable obects
   let language = languagesForm.elements["language"].value;
-  filterBasisAccordingParameters();
-  filterBasisAccordingSearch()
-  filteredPlacesBasis.forEach((placeObjeсt) => {
-    placesList.append(addNewCard(placeObjeсt, `${language}`));
-    body.classList.add("english");
-  });
-  if (filteredPlacesBasis.length === 0) {
-    placesList.innerHTML = "<p>ничего не найдено</p>";
+  for (const key in traslatableElements) {
+    if (traslatableElements.hasOwnProperty(key)) {
+      traslatableElements[key]
+        .findElement()
+        .changeDirection()
+        .setLanguageValue(language.toLowerCase())
+        .setPlaceHolderValue(language.toLowerCase());
+    }
   }
-  switchFontAndDirection(language);
+  switchFont(language);
 });
 
-//map 
-mapButton.addEventListener('click', function() {
-  parametersForm.innerHTML = ""
-  headerSearchContainer.innerHTML = ""
-  const map = mapTemplate.cloneNode(true);
-  placesList.innerHTML = "";
-  main.append(map)
-})
+//map
+mapButton.addEventListener("click", function () {
+  if (!main.querySelector(".map")) {
+    parametersForm.innerHTML = "";
+    headerSearchContainer.innerHTML = "";
+    placesList.setAttribute("style", "margin: 0px");
+    const map = mapTemplate.cloneNode(true);
+    placesList.innerHTML = "";
+    main.append(map);
+  }
+});
 
-
-const reversebaleElements = {
-  headerLogoTextContainer,
+const switchFont = (language) => {
+  switch (language) {
+    case "Hebrew":
+      body.style.direction = "rtl";
+      body.classList.remove("english");
+      body.classList.add("hebrew");
+      break;
+    case "English":
+    case "Russian":
+      body.style.direction = "ltr";
+      if (body.classList.contains("hebrew")) {
+        body.classList.remove("hebrew");
+        body.classList.add("english");
+      }
+      break;
+    default:
+      console.log("smth wrong");
+      break;
+  }
 };
+
+unsafeButton.addEventListener("click", function () {
+  
+  placesList.innerHTML = "";
+  let language = languagesForm.elements["language"].value;
+
+  unsafePlacesBasis.forEach((placeObjeсt) => {
+    placesList.append(addNewCard(placeObjeсt, `${language}`));
+  });
+});
